@@ -1,0 +1,31 @@
+services:
+  postgres:
+    container_name: postgres-sql-bsn
+    image: postgres
+    environment:
+      POSTGRES_USER: sysbookglobal
+      POSTGRES_PASSWORD: cac1ef4af1ad9fe795431d3924893733
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: bookglobal
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5434:5432
+    networks:
+      - spring-demo
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail-dev-bsn
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+networks:
+  spring-demo:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
